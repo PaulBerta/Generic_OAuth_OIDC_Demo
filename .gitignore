@@ -1,0 +1,25 @@
+# .NET build output
+**/bin/
+**/obj/
+**/out/
+**/artifacts/
+TestResults/
+
+# IDEs
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+_ReSharper.Caches/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+
+# OS cruft
+.DS_Store
+Thumbs.db

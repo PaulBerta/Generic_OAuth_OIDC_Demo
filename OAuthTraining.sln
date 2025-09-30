@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuthTraining", "OAuthTraining\OAuthTraining.csproj", "{7DECF3BF-B9B3-4E3D-9C57-1DFFE59B52F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceServer", "ResourceServer\ResourceServer.csproj", "{389D4149-50B4-482B-8097-78783DFB33D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DECF3BF-B9B3-4E3D-9C57-1DFFE59B52F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DECF3BF-B9B3-4E3D-9C57-1DFFE59B52F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DECF3BF-B9B3-4E3D-9C57-1DFFE59B52F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DECF3BF-B9B3-4E3D-9C57-1DFFE59B52F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{389D4149-50B4-482B-8097-78783DFB33D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{389D4149-50B4-482B-8097-78783DFB33D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{389D4149-50B4-482B-8097-78783DFB33D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{389D4149-50B4-482B-8097-78783DFB33D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

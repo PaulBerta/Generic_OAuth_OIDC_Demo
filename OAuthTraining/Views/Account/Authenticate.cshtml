@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Authenticate";
+}
+
+<h2>Authenticate</h2>
+
+<form method="post">
+    <div class="form-group">
+        <label for="idp">Identity Provider</label>
+        <select class="form-control" id="idp" name="idp">
+            <option value="EntraId">EntraId</option>
+            <option value="Okta">Okta</option>
+            <option value="Auth01">Auth01</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="tenantId">Tenant Id</label>
+        <input type="text" class="form-control" id="tenantId" name="tenantId" />
+    </div>
+    <div class="form-group">
+        <label for="clientId">Client Id</label>
+        <input type="text" class="form-control" id="clientId" name="clientId" />
+    </div>
+    <div class="form-group">
+        <label for="clientSecret">Client Secret</label>
+        <input type="password" class="form-control" id="clientSecret" name="clientSecret" />
+    </div>
+    <button type="submit" class="btn btn-primary">Go to login</button>
+</form>
+
