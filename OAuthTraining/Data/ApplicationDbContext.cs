@@ -7,7 +7,7 @@ namespace OAuthTraining.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<IdpConfig> IdpConfigs { get; set; }
+        public DbSet<IdpConfig> IdpConfigs => Set<IdpConfig>();
     }
 }
 

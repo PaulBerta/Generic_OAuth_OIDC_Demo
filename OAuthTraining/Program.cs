@@ -26,9 +26,11 @@ builder.Services.AddAuthentication(options =>
         options.RequireHttpsMetadata = false;
     });
 
-var connectionString = builder.Configuration.GetConnectionString("ConnectionStrings:DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<IdpConfigRepository>();
 
 builder.Services.AddControllersWithViews();
 
@@ -44,5 +46,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Account}/{action=Authenticate}/{id?}");
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
 
 app.Run();
