@@ -18,8 +18,13 @@ namespace OAuthTraining.Controllers
         }
 
         [HttpGet]
-        public IActionResult Authenticate()
+        public async Task<IActionResult> Authenticate()
         {
+            if (await _repository.HasAnyAsync())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             return View();
         }
 
@@ -39,7 +44,7 @@ namespace OAuthTraining.Controllers
                 ClientSecret = encryptedSecret
             };
             await _repository.AddAsync(config);
-            return RedirectToAction("Authenticate"); // Or redirect elsewhere
+            return RedirectToAction("Index", "Home");
         }
     }
 }
