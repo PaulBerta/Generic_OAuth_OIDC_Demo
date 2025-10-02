@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using OAuthTraining.Data;
 
@@ -35,6 +36,17 @@ builder.Services.AddScoped<IdpConfigRepository>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+var hasExistingConfig = false;
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await db.Database.MigrateAsync();
+
+    var repository = scope.ServiceProvider.GetRequiredService<IdpConfigRepository>();
+    hasExistingConfig = await repository.HasAnyAsync();
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -43,14 +55,13 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+var defaultRoute = hasExistingConfig
+    ? new { controller = "Home", action = "Index" }
+    : new { controller = "Account", action = "Authenticate" };
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Authenticate}/{id?}");
-
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    db.Database.Migrate();
-}
+    pattern: "{controller}/{action}/{id?}",
+    defaults: defaultRoute);
 
 app.Run();

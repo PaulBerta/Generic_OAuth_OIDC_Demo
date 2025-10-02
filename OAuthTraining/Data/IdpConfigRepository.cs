@@ -42,6 +42,11 @@ namespace OAuthTraining.Data
                 await _context.SaveChangesAsync();
             }
         }
+
+        public Task<bool> HasAnyAsync()
+        {
+            return _context.IdpConfigs.AnyAsync();
+        }
     }
 }
 
