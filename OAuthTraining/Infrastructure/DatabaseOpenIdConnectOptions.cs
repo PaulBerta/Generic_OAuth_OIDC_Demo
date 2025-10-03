@@ -29,6 +29,9 @@ namespace OAuthTraining.Infrastructure
 
             if (config is null)
             {
+                options.Authority = "https://placeholder.invalid";
+                options.ClientId = "placeholder";
+                options.ClientSecret = "placeholder";
                 return;
             }
 
