@@ -14,15 +14,18 @@ namespace OAuthTraining.Controllers
         private readonly IdpConfigRepository _repository;
         private readonly IDataProtector _protector;
         private readonly IOptionsMonitorCache<OpenIdConnectOptions> _optionsCache;
+        private readonly IOptionsMonitor<OpenIdConnectOptions> _optionsMonitor;
 
         public AccountController(
             IdpConfigRepository repository,
             IDataProtectionProvider provider,
-            IOptionsMonitorCache<OpenIdConnectOptions> optionsCache)
+            IOptionsMonitorCache<OpenIdConnectOptions> optionsCache,
+            IOptionsMonitor<OpenIdConnectOptions> optionsMonitor)
         {
             _repository = repository;
             _protector = provider.CreateProtector("IdpConfig.ClientSecret");
             _optionsCache = optionsCache;
+            _optionsMonitor = optionsMonitor;
         }
 
         [HttpGet]
@@ -54,6 +57,7 @@ namespace OAuthTraining.Controllers
             await _repository.AddAsync(config);
 
             _optionsCache.TryRemove(OpenIdConnectDefaults.AuthenticationScheme);
+            _optionsMonitor.Get(OpenIdConnectDefaults.AuthenticationScheme);
 
             return Challenge(
                 new AuthenticationProperties
