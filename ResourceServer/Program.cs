@@ -1,3 +1,5 @@
+// Minimal API that simulates a downstream resource server the SPA/API can call after obtaining a
+// token from the identity provider.  It is left intentionally simple for training purposes.
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -38,6 +40,7 @@ app.MapGet("/weatherforecast", () =>
 
 app.Run();
 
+// Lightweight DTO returned by the sample endpoint.
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
