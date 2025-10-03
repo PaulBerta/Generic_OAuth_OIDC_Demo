@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using OAuthTraining.Data;
 
 namespace OAuthTraining.Infrastructure
@@ -39,9 +40,14 @@ namespace OAuthTraining.Infrastructure
             var protector = dataProtectionProvider.CreateProtector("IdpConfig.ClientSecret");
             var clientSecret = protector.Unprotect(config.ClientSecret);
 
-            options.Authority = config.Authority;
+            options.Authority = $"https://{config.TenantId}";
             options.ClientId = config.ClientId;
             options.ClientSecret = clientSecret;
+            
+            options.ResponseType = OpenIdConnectResponseType.Code;
+            options.SaveTokens = true;
+        
+            options.RequireHttpsMetadata = false;
         }
 
         public void Configure(OpenIdConnectOptions options)
