@@ -16,6 +16,11 @@ namespace OAuthTraining.Data
             return await _context.IdpConfigs.ToListAsync();
         }
 
+        public Task<IdpConfig?> GetCurrentAsync()
+        {
+            return _context.IdpConfigs.SingleOrDefaultAsync();
+        }
+
         public async Task<IdpConfig?> GetByIdAsync(int id)
         {
             return await _context.IdpConfigs.FindAsync(id);

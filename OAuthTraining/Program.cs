@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using OAuthTraining.Data;
+using OAuthTraining.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,17 +16,13 @@ builder.Services.AddAuthentication(options =>
     .AddCookie()
     .AddOpenIdConnect(options =>
     {
-        var oidcConfig = builder.Configuration.GetSection("OpenIDConnectSettings");
-
-        options.Authority = oidcConfig["Authority"];
-        options.ClientId = oidcConfig["ClientId"];
-        options.ClientSecret = oidcConfig["ClientSecret"];
-
         options.ResponseType = OpenIdConnectResponseType.Code;
         options.SaveTokens = true;
-        
+
         options.RequireHttpsMetadata = false;
     });
+
+builder.Services.AddSingleton<IConfigureOptions<OpenIdConnectOptions>, DatabaseOpenIdConnectOptions>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
