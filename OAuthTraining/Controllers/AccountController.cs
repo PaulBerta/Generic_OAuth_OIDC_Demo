@@ -33,7 +33,15 @@ namespace OAuthTraining.Controllers
         {
             if (await _repository.HasAnyAsync())
             {
-                return RedirectToAction("Index", "Home");
+                _optionsCache.TryRemove(OpenIdConnectDefaults.AuthenticationScheme);
+                _optionsMonitor.Get(OpenIdConnectDefaults.AuthenticationScheme);
+
+                return Challenge(
+                    new AuthenticationProperties
+                    {
+                        RedirectUri = Url.Action("Index", "Home")
+                    },
+                    OpenIdConnectDefaults.AuthenticationScheme);
             }
 
             return View();
@@ -59,12 +67,7 @@ namespace OAuthTraining.Controllers
             _optionsCache.TryRemove(OpenIdConnectDefaults.AuthenticationScheme);
             _optionsMonitor.Get(OpenIdConnectDefaults.AuthenticationScheme);
 
-            return Challenge(
-                new AuthenticationProperties
-                {
-                    RedirectUri = Url.Action("Index", "Home")
-                },
-                OpenIdConnectDefaults.AuthenticationScheme);
+            return RedirectToAction(nameof(Authenticate));
         }
     }
 }
