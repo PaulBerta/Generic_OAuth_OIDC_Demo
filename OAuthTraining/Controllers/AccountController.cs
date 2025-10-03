@@ -94,6 +94,7 @@ namespace OAuthTraining.Controllers
             // Remove the old cached snapshot.  The redirected GET action will immediately warm the
             // cache with the new data before issuing the challenge.
             _optionsCache.TryRemove(OpenIdConnectDefaults.AuthenticationScheme);
+            _optionsMonitor.Get(OpenIdConnectDefaults.AuthenticationScheme);
 
             return RedirectToAction(nameof(Authenticate));
         }
